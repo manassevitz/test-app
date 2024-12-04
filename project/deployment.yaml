@@ -30,8 +30,14 @@ spec:
       - name: metrics-exporter
         image: prom/prometheus:latest
         args:
-          - "--web.listen-address=:8080"
+          - "--config.file=/prometheus/prometheus.yml"
+        volumeMounts:
+        - name: prometheus-config-volume
+          mountPath: /prometheus
       volumes:
       - name: scripts
         configMap:
           name: traffic-simulator-scripts
+      - name: prometheus-config-volume
+        configMap:
+          name: prometheus-config
