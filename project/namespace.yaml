@@ -1,13 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
+kind: Namespace
 metadata:
-  name: traffic-simulator-scripts
-data:
-  test-script.js: |
-    import http from 'k6/http';
-    import { sleep } from 'k6';
-
-    export default function () {
-      const res = http.get('http://httpbin.org/status/200,500,404');
-      sleep(1);
-    }
+  name: kube-system
