@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-simulator
+  labels:
+    app: traffic-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-simulator
+  template:
+    metadata:
+      labels:
+        app: traffic-simulator
+    spec:
+      containers:
+      - name: traffic-simulator
+        image: grafana/k6:latest
+        args:
+          - run
+          - --vus
+          - "5"
+          - --duration
+          - "1m"
+          - /scripts/test-script.js
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+      - name: metrics-exporter
+        image: prom/prometheus:latest
+        args:
+          - "--web.listen-address=:8080"
+      volumes:
+      - name: scripts
+        configMap:
+          name: traffic-simulator-scripts
