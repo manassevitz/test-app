@@ -32,7 +32,7 @@ spec:
         args:
           - "--config.file=/prometheus/prometheus.yml"
           - "--storage.tsdb.path=/prometheus/data"
-          - "--query.active-tracker.dir=/prometheus/active-queries"
+          - "--query.active-tracker.dir=/prometheus/data/active-queries"
         volumeMounts:
         - name: prometheus-config-volume
           mountPath: /prometheus
