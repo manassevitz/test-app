@@ -15,28 +15,6 @@ spec:
         app: traffic-simulator
     spec:
       containers:
-      - name: traffic-simulator
-        image: grafana/k6:latest
-        args:
-          - run
-          - --vus
-          - "5"
-          - --duration
-          - "1m"
-          - /scripts/test-script.js
-        volumeMounts:
-        - name: scripts
-          mountPath: /scripts
-      - name: metrics-exporter
-        image: prom/prometheus:latest
-        args:
-          - "--config.file=/prometheus/prometheus.yml"
-          - "--storage.tsdb.path=/prometheus-data"
-        volumeMounts:
-        - name: prometheus-config-volume
-          mountPath: /prometheus
-        - name: prometheus-data
-          mountPath: /prometheus-data
       - name: grafana
         image: grafana/grafana:latest
         ports:
