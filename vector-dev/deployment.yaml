@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vector-dev
+  labels:
+    app: vector-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vector-dev
+  template:
+    metadata:
+      labels:
+        app: vector-dev
+    spec:
+      containers:
+      - name: vector
+        image: timberio/vector:0.10.0-alpine
+        ports:
+        - containerPort: 9000
+        env:
+        volumeMounts:
+        - name: vector-storage
+          mountPath: /etc/vector
+      volumes:
+      - name: vector-storage
+        emptyDir: {}
