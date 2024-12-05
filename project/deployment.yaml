@@ -31,13 +31,10 @@ spec:
         image: prom/prometheus:latest
         args:
           - "--config.file=/prometheus/prometheus.yml"
-          - "--storage.tsdb.path=/prometheus-data"
-          - "--query.active-tracker.dir=/prometheus-data/active-queries"
+          - "--storage.tsdb.path=/prometheus"
         volumeMounts:
         - name: prometheus-config-volume
           mountPath: /prometheus
-        - name: prometheus-data
-          mountPath: /prometheus-data
       volumes:
       - name: scripts
         configMap:
@@ -45,5 +42,3 @@ spec:
       - name: prometheus-config-volume
         configMap:
           name: prometheus-config
-      - name: prometheus-data
-        emptyDir: {}
