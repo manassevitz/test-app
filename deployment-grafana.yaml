@@ -16,15 +16,6 @@ spec:
         app: grafana
     spec:
       containers:
-        image: prom/prometheus:latest
-        args:
-          - "--config.file=/prometheus/prometheus.yml"
-          - "--storage.tsdb.path=/prometheus-data"
-        volumeMounts:
-        - name: prometheus-config-volume
-          mountPath: /prometheus
-        - name: prometheus-data
-          mountPath: /prometheus-data
       - name: grafana
         image: grafana/grafana:latest
         ports:

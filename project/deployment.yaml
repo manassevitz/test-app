@@ -56,4 +56,4 @@ spec:
         configMap:
           name: prometheus-config
       - name: prometheus-data
-        emptyDir: {}
+        emptyDir: {}       
