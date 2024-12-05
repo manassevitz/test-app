@@ -1,33 +1,21 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: traffic-simulator
+  name: grafana
   labels:
-    app: traffic-simulator
+    app: grafana
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: traffic-simulator
+      app: grafana
   template:
     metadata:
       labels:
-        app: traffic-simulator
+        app: grafana
     spec:
       containers:
-      - name: traffic-simulator
-        image: grafana/k6:latest
-        args:
-          - run
-          - --vus
-          - "5"
-          - --duration
-          - "1m"
-          - /scripts/test-script.js
-        volumeMounts:
-        - name: scripts
-          mountPath: /scripts
-      - name: metrics-exporter
         image: prom/prometheus:latest
         args:
           - "--config.file=/prometheus/prometheus.yml"
@@ -37,6 +25,7 @@ spec:
           mountPath: /prometheus
         - name: prometheus-data
           mountPath: /prometheus-data
+      - name: grafana
         image: grafana/grafana:latest
         ports:
         - containerPort: 3000
@@ -49,11 +38,6 @@ spec:
         - name: grafana-storage
           mountPath: /var/lib/grafana
       volumes:
-      - name: scripts
-        configMap:
-          name: traffic-simulator-scripts
-      - name: prometheus-config-volume
-        configMap:
-          name: prometheus-config
-      - name: prometheus-data
+        emptyDir: {}
+      - name: grafana-storage
         emptyDir: {}
