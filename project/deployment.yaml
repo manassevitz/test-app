@@ -37,6 +37,18 @@ spec:
           mountPath: /prometheus
         - name: prometheus-data
           mountPath: /prometheus-data
+      - name: grafana
+        image: grafana/grafana:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_USER
+          value: "admin"
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "admin"
+        volumeMounts:
+        - name: grafana-storage
+          mountPath: /var/lib/grafana
       volumes:
       - name: scripts
         configMap:
@@ -46,3 +58,5 @@ spec:
           name: prometheus-config
       - name: prometheus-data
         emptyDir: {}
+      - name: grafana-storage
+        emptyDir: {}        
