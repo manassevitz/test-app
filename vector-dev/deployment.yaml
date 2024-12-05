@@ -22,7 +22,7 @@ spec:
         env:
         volumeMounts:
         - name: vector-storage
-          mountPath: /etc/vector
+          mountPath: /vector
       volumes:
       - name: vector-storage
         emptyDir: {}
