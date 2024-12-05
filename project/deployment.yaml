@@ -58,7 +58,7 @@ spec:
       - name: prometheus-data
         emptyDir: {}
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
@@ -75,6 +75,19 @@ spec:
         app: grafana
     spec:
       containers:
+      - name: traffic-simulator
+        image: grafana/k6:latest
+        args:
+          - run
+          - --vus
+          - "5"
+          - --duration
+          - "1m"
+          - /scripts/test-script.js
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+      - name: metrics-exporter
         image: prom/prometheus:latest
         args:
           - "--config.file=/prometheus/prometheus.yml"
@@ -97,6 +110,13 @@ spec:
         - name: grafana-storage
           mountPath: /var/lib/grafana
       volumes:
+      - name: scripts
+        configMap:
+          name: traffic-simulator-scripts
+      - name: prometheus-config-volume
+        configMap:
+          name: prometheus-config
+      - name: prometheus-data
         emptyDir: {}
       - name: grafana-storage
         emptyDir: {}
