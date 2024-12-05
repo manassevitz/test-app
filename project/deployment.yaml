@@ -61,18 +61,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana
+  name: traffic-simulator
   labels:
-    app: grafana
+    app: traffic-simulator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: grafana
+      app: traffic-simulator
   template:
     metadata:
       labels:
-        app: grafana
+        app: traffic-simulator
     spec:
       containers:
       - name: traffic-simulator
