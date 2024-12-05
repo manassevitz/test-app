@@ -31,10 +31,10 @@ spec:
         image: prom/prometheus:latest
         args:
           - "--config.file=/prometheus/prometheus.yml"
-          - "--storage.tsdb.path=/prometheus/data"
+          - "--storage.tsdb.path=/prometheus"
         volumeMounts:
         - name: prometheus-config-volume
-          mountPath: /prometheus/data
+          mountPath: /prometheus
       volumes:
       - name: scripts
         configMap:
